@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MODELOOM — Order Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #fff5e6;
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      border: 2px solid orange;
+    }
+    h1 {
+      color: orange;
+      margin-bottom: 5px;
+    }
+    h3 {
+      color: gray;
+      margin-top: 0;
+      font-weight: normal;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: orange;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: darkorange;
+    }
+    .success-message {
+      margin-top: 10px;
+      color: green;
+      font-size: 16px;
+      font-weight: bold;
+      display: none;
+    }
+    .return-policy {
+      margin-top: 15px;
+      font-weight: bold;
+      color: red;
+      text-align: center;
+    }
+    .shopping-line {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      color: gray;
+    }
+    .shopify-logo {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 50px;
+    }
+  </style>
+</head>
+<body style="background-image: url('458914_3b3e2ad35115482280dac06d6897a87f~mv2.jpg');">
+
+  <div class="shopping-line">Shopping Line</div>
+  <img class="shopify-logo" src="https://cdn.shopify.com/assets/images/logos/shopify-bag.png" alt="Shopify">
+
+  <div class="container">
+    <h1>MODELOOM</h1>
+    <h3>By De Fashion Club</h3>
+
+    <form id="orderForm">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Address:</label>
+      <input type="text" name="address" required>
+
+      <label>Mobile Number:</label>
+      <input type="tel" name="mobile" pattern="[0-9]{10}" required placeholder="10 digit number">
+
+      <label>Pin Code:</label>
+      <input type="text" name="pincode" required>
+
+      <label>T-Shirt Size:</label>
+      <select name="tshirt">
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+        <option>XL</option>
+        <option>XXL</option>
+      </select>
+
+      <label>Jeans Size:</label>
+      <select name="jeans">
+        <option>26</option>
+        <option>28</option>
+        <option>30</option>
+        <option>32</option>
+        <option>34</option>
+        <option>36</option>
+        <option>38</option>
+      </select>
+
+      <label>Payment Method:</label>
+      <select name="payment">
+        <option>Cash on Delivery</option>
+      </select>
+
+      <button type="submit">Place Order</button>
+      <div class="success-message" id="successMessage">Your order was submitted successfully!</div>
+    </form>
+
+    <div class="return-policy">RETURN POLICY: 7 Days Easy Return Available</div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz5-UH8g5wfl2hR08lF1IhEEtNFyZYDRfAO0jqccvPXML0CkmrGcUUwhASMTIly8oSP9g/exec";
+    const form = document.getElementById("orderForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      // Send form data to Google Sheet
+      const formData = new FormData(form);
+
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then(response => response.text())
+        .then(() => {
+          successMessage.style.display = "block";  // Sidha success message show karo
+          form.reset();  // Form clear karo
+        });
+    });
+  </script>
+
+</body>
+</html>
